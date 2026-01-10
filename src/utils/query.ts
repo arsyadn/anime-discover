@@ -13,3 +13,17 @@ export const buildQuery = (
     )
   ).toString();
 };
+
+export const generateYearOptions = (startYear = 1990) => {
+  const currentYear = new Date().getFullYear();
+  const options = [{ label: "All Year", value: "" }];
+
+  for (let year = currentYear; year >= startYear; year--) {
+    options.push({
+      label: String(year),
+      value: String(year),
+    });
+  }
+
+  return options;
+};

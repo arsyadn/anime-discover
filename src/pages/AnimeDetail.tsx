@@ -8,6 +8,7 @@ import { getUserId, isLoggedIn } from "../utils/auth";
 import { addToWishlist, getWishlist } from "../api/wishlist";
 import { Loading } from "./AnimeList";
 import ModalPopUp from "../components/ModalPopUp";
+import LoadingComp from "../components/LoadingComp";
 
 const Page = styled.main`
   min-height: 100vh;
@@ -257,7 +258,7 @@ const AnimeDetail = () => {
       .finally(() => setLoadingEntry(false));
   }, [id]);
 
-  if (loading) return <Loading>Loading...</Loading>;
+  if (loading) return <LoadingComp />;
   if (error || !anime) return <Page>{error ?? "Anime not found"}</Page>;
 
   const { attributes } = anime;

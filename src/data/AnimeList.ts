@@ -1,3 +1,6 @@
+import { DropdownType } from "../types/anime";
+import { generateYearOptions } from "../utils/query";
+
 export const arrCategories: string[] = [
   "All Categories",
   "Action",
@@ -30,9 +33,11 @@ export const arrCategories: string[] = [
   "Violence",
 ];
 
-export const arrSortOptions: { label: string; value: string }[] = [
+export const arrSortOptions: DropdownType = [
   { label: "Trending", value: "" },
   { label: "Most Popular", value: "-userCount" },
   { label: "Top Rated", value: "-averageRating" },
   { label: "Newest", value: "-startDate" },
 ];
+
+export const arrYearOptions: DropdownType = generateYearOptions();

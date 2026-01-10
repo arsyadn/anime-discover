@@ -8,13 +8,15 @@ interface UseAnimeListOptions {
   search?: string;
   category?: string;
   sort?: string;
+  year?: string;
 }
 
 export const useAnimeList = ({
   page,
   search,
   category,
-  sort
+  sort,
+  year,
 }: UseAnimeListOptions) => {
   const [anime, setAnime] = useState<Anime[]>([]);
   const [loading, setLoading] = useState(false);
@@ -25,7 +27,7 @@ export const useAnimeList = ({
     setLoading(true);
     setError(null);
 
-    fetchAnimeList({ page, search, category, sort })
+    fetchAnimeList({ page, search, category, sort, year })
       .then((res) => {
         const list = res.data ?? [];
 
@@ -37,7 +39,7 @@ export const useAnimeList = ({
       })
       .catch(() => setError("Failed to load anime list"))
       .finally(() => setLoading(false));
-  }, [page, search, category, sort]);
+  }, [page, search, category, sort, year]);
 
   return { anime, loading, error, hasMore };
 };

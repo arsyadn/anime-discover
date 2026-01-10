@@ -15,3 +15,5 @@ export interface Anime {
     startDate: string;
   };
 }
+
+export type DropdownType = { label: string; value: string }[];

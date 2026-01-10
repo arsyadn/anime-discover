@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useWishlist } from "../hooks/useWishlist";
 import { getUserId } from "../utils/auth";
+import LoadingComp from "./LoadingComp";
 
 const Page = styled.main`
   min-height: 100vh;
@@ -115,7 +116,7 @@ export default function Wishlist() {
   if (loading) {
     return (
       <Page>
-        <StateText>Loading wishlist...</StateText>
+        <LoadingComp />
       </Page>
     );
   }

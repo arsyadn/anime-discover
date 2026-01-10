@@ -7,6 +7,7 @@ interface FetchAnimeListOptions {
   search?: string;
   category?: string;
   sort?: string;
+  year?: string;
 }
 
 export const fetchAnimeList = async (options: FetchAnimeListOptions) => {
@@ -16,6 +17,7 @@ export const fetchAnimeList = async (options: FetchAnimeListOptions) => {
     ...(options.search && { "filter[text]": options.search }),
     ...(options.category && { "filter[categories]": options.category }),
     ...(options.sort && { sort: options.sort }),
+    ...(options.year && { "filter[seasonYear]": options.year }),
   });
 
   const res = await apiClient.get(`/anime?${query}`);

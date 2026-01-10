@@ -6,6 +6,7 @@ import { useAnimeList } from "../hooks/useAnimeList";
 import { useDebounce } from "../hooks/useDebounce";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { DEFAULT_LIMIT } from "../utils/pagination";
+import LoadingComp from "../components/LoadingComp";
 
 const Page = styled.main`
   max-width: 1400px;
@@ -30,6 +31,7 @@ export default function AnimeList() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
+  const [year, setYear] = useState("");
 
   const debouncedSearch = useDebounce(search, 500);
 
@@ -38,8 +40,8 @@ export default function AnimeList() {
     search: debouncedSearch,
     category,
     sort,
+    year,
   });
-
   const loadMore = useCallback(() => {
     if (loading || !hasMore) return;
     setPage((p) => p + 1);
@@ -66,19 +68,30 @@ export default function AnimeList() {
           setSort(v);
           setPage(1);
         }}
+        year={year}
+        onYearChange={(v) => {
+          setYear(v);
+          setPage(1);
+        }}
       />
 
       <Page>
-        <Grid>
-          {anime.map((item) => (
-            <AnimeCard key={item.id} anime={item} />
-          ))}
-        </Grid>
+        {loading && page === 1 ? (
+          <LoadingComp />
+        ) : (
+          <>
+            <Grid>
+              {anime.map((item) => (
+                <AnimeCard key={item.id} anime={item} />
+              ))}
+            </Grid>
 
-        {loading && <Loading>Loading...</Loading>}
-        {error && <Loading>{error}</Loading>}
+            {loading && <LoadingComp />}
+            {error && <LoadingComp title={error} />}
 
-        <div ref={loadMoreRef} />
+            <div ref={loadMoreRef} />
+          </>
+        )}
       </Page>
     </>
   );

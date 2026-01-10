@@ -1,7 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Menu, X, LogOut, User, Heart } from "lucide-react";
-import { arrCategories, arrSortOptions } from "../data/AnimeList";
+import {
+  arrCategories,
+  arrSortOptions,
+  arrYearOptions,
+} from "../data/AnimeList";
 import { useNavigate } from "react-router-dom";
 import { isLoggedIn, logout } from "../utils/auth";
 
@@ -13,6 +17,8 @@ interface NavbarProps {
   onCategoryChange: (value: string) => void;
   sort: string;
   onSortChange: (value: string) => void;
+  year: string;
+  onYearChange: (value: string) => void;
 }
 
 const Bar = styled.header`
@@ -78,6 +84,15 @@ const Select = styled.select`
   color: ${({ theme }) => theme.colors.text};
   border: none;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
 `;
 
 const IconButton = styled.button`
@@ -160,7 +175,9 @@ const Navbar: React.FC<NavbarProps> = ({
   category,
   onCategoryChange,
   sort,
-  onSortChange
+  onSortChange,
+  year,
+  onYearChange,
 }) => {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -206,6 +223,17 @@ const Navbar: React.FC<NavbarProps> = ({
                 {arrSortOptions.map((item, id) => (
                   <option key={id} value={item.value}>
                     {item.label}
+                  </option>
+                ))}
+              </Select>
+
+              <Select
+                value={year}
+                onChange={(e) => onYearChange(e.target.value)}
+              >
+                {arrYearOptions.map((y) => (
+                  <option key={y.value} value={y.value}>
+                    {y.label}
                   </option>
                 ))}
               </Select>
@@ -280,6 +308,17 @@ const Navbar: React.FC<NavbarProps> = ({
                 {arrSortOptions.map((o) => (
                   <option key={o.value} value={o.value}>
                     {o.label}
+                  </option>
+                ))}
+              </Select>
+
+              <Select
+                value={year}
+                onChange={(e) => onYearChange(e.target.value)}
+              >
+                {arrYearOptions.map((y) => (
+                  <option key={y.value} value={y.value}>
+                    {y.label}
                   </option>
                 ))}
               </Select>

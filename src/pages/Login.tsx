@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import { fetchCurrentUser } from "../api/kitsu";
 import { isLoggedIn } from "../utils/auth";
+import { Eye, EyeOff } from "lucide-react";
 
 const Wrapper = styled.div`
   background: url(${process.env.REACT_APP_BACKGROUND_LOGIN_ASSET});
@@ -103,6 +104,27 @@ const LinkStyled = styled(Link)`
   }
 `;
 
+const PasswordWrapper = styled.div`
+  position: relative;
+`;
+
+const TogglePassword = styled.button`
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.muted};
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text};
+  }
+`;
+
 export default function Login() {
   const navigate = useNavigate();
 
@@ -110,6 +132,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -158,7 +181,7 @@ export default function Login() {
 
           <form onSubmit={handleSubmit}>
             <Field>
-              <Label>Email or Username</Label>
+              <Label>Email</Label>
               <Input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -168,12 +191,22 @@ export default function Login() {
 
             <Field>
               <Label>Password</Label>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <PasswordWrapper>
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+
+                <TogglePassword
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label="Toggle password visibility"
+                >
+                  {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                </TogglePassword>
+              </PasswordWrapper>
             </Field>
 
             <Button type="submit" disabled={loading}>

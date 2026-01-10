@@ -12,6 +12,8 @@ const WishlistWrapper = () => {
         onCategoryChange={() => {}}
         sort=""
         onSortChange={() => {}}
+        year=""
+        onYearChange={() => {}}
       />
       <Wishlist />
     </>
