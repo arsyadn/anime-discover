@@ -37,7 +37,7 @@ export default function AnimeList() {
     page,
     search: debouncedSearch,
     category,
-    sort
+    sort,
   });
 
   const loadMore = useCallback(() => {
@@ -45,13 +45,7 @@ export default function AnimeList() {
     setPage((p) => p + 1);
   }, [loading, hasMore]);
 
-  const enableInfiniteScroll = page > 1 && anime.length >= DEFAULT_LIMIT;
-  const loadMoreRef = useInfiniteScroll(
-    loadMore,
-    hasMore,
-    loading,
-    enableInfiniteScroll
-  );
+  const loadMoreRef = useInfiniteScroll(loadMore, hasMore, loading);
 
   return (
     <>
